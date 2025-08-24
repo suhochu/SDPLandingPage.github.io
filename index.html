@@ -1,376 +1,75 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALPAKA - Software Defined Parking Solution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #020a1a;
-            --primary-text: #e0e0e0;
-            --accent-color: #00f0ff;
-            --card-bg: rgba(10, 25, 47, 0.7);
-            --border-color: rgba(0, 240, 255, 0.3);
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--primary-text);
-            background-image:
-                radial-gradient(circle at 25px 25px, var(--border-color) 1px, transparent 0),
-                radial-gradient(circle at 75px 75px, var(--border-color) 1px, transparent 0);
-            background-size: 100px 100px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 100px 20px 60px 20px;
-            background: linear-gradient(rgba(2, 10, 26, 0.8), rgba(2, 10, 26, 1)), url('https://placehold.co/1200x800/020a1a/00f0ff?text=ALPAKA') no-repeat center center/cover;
-            /* 위 이미지는 '주차된 차들을 배경으로 알파카들이 휴식을 취하는' 이미지로 교체될 예정입니다. */
-        }
-        
-        .hero .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px var(--accent-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px auto;
-            color: #b0c4de;
-        }
-
-        .section {
-            padding: 60px 20px;
-            margin-bottom: 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.1);
-        }
-
-        .intro-section {
-            text-align: center;
-        }
-
-        h2, h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent-color);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-        }
-
-        h3 {
-            font-size: 2rem;
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            line-height: 1.4;
-        }
-        
-        .highlight-box {
-            background-color: rgba(0, 240, 255, 0.05);
-            padding: 20px;
-            border-left: 4px solid var(--accent-color);
-            border-radius: 5px;
-            text-align: center;
-            font-weight: 500;
-            font-size: 1.2rem;
-            margin: 30px auto;
-            max-width: 80%;
-        }
-        
-        .flow-chart {
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin: 40px 0;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .step {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-        }
-
-        .step h4 {
-            font-family: 'Orbitron', sans-serif;
-            margin-top: 0;
-            color: var(--accent-color);
-            font-size: 1.4rem;
-        }
-        
-        .step p {
-            font-size: 0.95rem;
-            color: #b0c4de;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        ul li {
-            background: rgba(0, 240, 255, 0.05);
-            margin-bottom: 10px;
-            padding: 15px;
-            border-left: 3px solid var(--accent-color);
-            border-radius: 4px;
-        }
-
-        .form-section {
-            background: linear-gradient(145deg, rgba(10, 25, 47, 0.8), rgba(2, 10, 26, 0.9));
-        }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 600px;
-            margin: 30px auto 0 auto;
-        }
-
-        form input[type="text"],
-        form input[type="email"] {
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            background-color: rgba(2, 10, 26, 0.8);
-            color: var(--primary-text);
-            font-size: 1rem;
-        }
-        
-        form input::placeholder {
-            color: #8899aa;
-        }
-
-        form button {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            padding: 15px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: 'Noto Sans KR', sans-serif;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-        }
-
-        form button:hover {
-            background-color: #fff;
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
-        }
-        
-        form button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-
-        #form-message {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: 500;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        footer p {
-            margin: 5px 0;
-            color: #8899aa;
-        }
-
-        @media(max-width: 768px) {
-            .hero .logo {
-                font-size: 3rem;
-            }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.7rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="hero">
-        <div class="logo">ALPAKA</div>
-        <p>Alpha in Mobility. We design space logic within movement.</p>
-    </div>
-
-    <div class="container">
-
-        <div class="section intro-section">
-            <h2>도심 신축 건물의 주차 문제, ALPAKA가 해결해 드립니다.</h2>
-            <h3>건축주님, 혹시 주차장 때문에 고민하고 계신가요?</h3>
-            <p>"편의를 위해 이용하는 자동차, 하지만 주차는 단 한 번도 편한 적이 없다.”<br>목적지 도착 후에도 주차 공간을 찾아 헤매고, 비좁은 공간에 몇 번이고 차를 넣고 빼는 불편한 경험, 누구나 한 번쯤은 겪어보셨을 겁니다.</p>
-            <p>기존 주차장은 전체 건축 면적의 상당 부분을 차지하여 건축비를 상승시키는 주요 원인이 됩니다.<br>주차 공간은 45%에 불과하지만, 통로 등 주차 외 공간이 55%를 차지하는 비효율적인 구조이기 때문입니다.</p>
-        </div>
-
-        <div class="section">
-            <h3>SDP(Software Defined Parking) 솔루션 : 건설에서 찾은 혁신</h3>
-            <p style="text-align:center;">ALPAKA는 이 문제를 건설의 관점에서 재정의했습니다. 로봇 주차 기술은 이미 완성되었지만, 높은 투자비 부담으로 사업성이 미완성이었습니다.</p>
-            <div class="highlight-box">
-                해결책은 간단합니다. 건축비를 줄여 로봇 설치비로 전환하는 것입니다.
-            </div>
-            <p style="text-align:center;">ALPAKA의 로봇 주차 특화 설계를 통해 <strong>기존 대비 40%의 면적을 절감</strong>하고, 동일한 주차 대수를 확보할 수 있습니다.<br>이를 통해 확보된 건축비 절감액으로 로봇 주차 시스템 도입이 가능해져, 수익성을 극대화할 수 있습니다.</p>
-            <div class="flow-chart">
-                건축 면적 감소 → 건축비 감소 → 주차 로봇 설치 가능 → 수익성 증대
-            </div>
-        </div>
-
-        <div class="section">
-            <h3>ALPAKA의 3단계 맞춤형 솔루션</h3>
-            <p style="text-align:center;">고객의 부담을 덜어드리기 위해 컨설팅부터 운영까지 완벽한 솔루션을 3단계로 나누어 제공합니다.</p>
-            <div class="steps">
-                <div class="step">
-                    <h4>STEP 1: 로봇 주차 특화 모듈 설계 컨설팅</h4>
-                    <p><strong>SDP-Sim (타당성 분석 SaaS):</strong> 건축 도면을 기반으로 디지털 시뮬레이션을 통해 절감 가능한 면적과 비용을 정량적 ROI 분석 리포트로 제공합니다.</p>
-                    <p><strong>수익 모델:</strong> 절감되는 금액의 일정 비율로 수수료를 책정하여 합리적입니다.</p>
-                </div>
-                <div class="step">
-                    <h4>STEP 2: 로봇 주차 운영체제(OS) 공급</h4>
-                    <p><strong>SDP-Logic (로봇 운영 시스템):</strong> 하드웨어에 독립적인 개방형 OS로, 최적 경로 탐색 및 동적 재배치 등 핵심 기술을 통해 효율적인 주차 관리가 가능합니다.</p>
-                    <p><strong>수익 모델:</strong> 도입되는 로봇 대수를 기반으로 라이선스 비용이 책정됩니다 (로봇 가격의 10%).</p>
-                </div>
-                <div class="step">
-                    <h4>STEP 3: 사용자 & 관리자 플랫폼 제공</h4>
-                    <p><strong>ALPAKA (통합 관리 플랫폼):</strong> 사용자용 모바일 앱과 관리자용 웹을 통해 편리한 주차 경험을 제공하고, 데이터 기반 운영 최적화를 지원합니다.</p>
-                    <p><strong>수익 모델:</strong> 주차면 수 기준 월 시스템 이용료(SaaS 구독)를 통해 안정적인 운영이 가능합니다.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h3>ALPAKA의 기술력과 전문성</h3>
-            <ul>
-                <li><strong>독자적인 AI 알고리즘:</strong> 실시간 차량 배치 및 로봇 제어 로직을 통해 최단 경로를 산출하고, 차량 간 간섭 및 장애물을 실시간으로 계산하여 재배치합니다.</li>
-                <li><strong>검증된 실증 사업:</strong> 현대자동차 고양 및 제네시스 모터 스튜디오와의 PoC를 통해 기술력과 사업성을 검증받았습니다.</li>
-                <li><strong>최고의 전문가 팀:</strong> 신사업 전략, 투자, 기술 설계, 시장 전략 등 각 분야 최고의 경력을 갖춘 인력과 카이스트, 홍익대, 남서울대 등 학계 최고 교수진이 기술 자문으로 함께합니다.</li>
-            </ul>
-        </div>
-
-        <div class="section form-section">
-            <h2>수도권 신축 상업시설 건축주라면 지금 바로 문의하세요.</h2>
-            <p style="text-align:center;">수도권 내 55대 이상 주차 공간이 필요한 대형 상업 건물을 계획 중이신가요?<br> ALPAKA의 혁신적인 SDP 솔루션을 통해 건축비를 절감하고 주차장 가치를 극대화할 기회를 놓치지 마십시오.</p>
-            <p style="text-align:center; margin-bottom: 30px; color: var(--accent-color); font-weight: 700;">지금 바로 무료 컨설팅을 신청하고, 귀하의 프로젝트에 최적화된 ROI 분석 리포트를 받아보세요.</p>
-
-            <form id="consulting-form">
-                <div>
-                    <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
-                </div>
-                <div>
-                    <input type="email" id="email" name="email" placeholder="회신받으실 이메일 주소를 입력해주세요" required>
-                </div>
-                <button type="submit" id="submit-button">무료 컨설팅 신청하기</button>
-                <p id="form-message"></p>
-            </form>
-        </div>
-
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>contact@alpakacorp.com</p>
-            <p>&copy; 2025 ALPAKA Corp. All Rights Reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        const form = document.getElementById('consulting-form');
-        const submitButton = document.getElementById('submit-button');
-        const formMessage = document.getElementById('form-message');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
-
-            // **중요**: 아래 URL을 2단계에서 생성한 본인의 Google Apps Script 웹 앱 URL로 교체해야 합니다.
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNjX9AEL1CnaOmIHPmQn9TGd8Tf6U69Qf0nCtNTwtOoHWMx_sokHP4uCr_vgr6qMTFMg/exec';
-
-            // Show loading state
-            submitButton.disabled = true;
-            submitButton.textContent = '전송 중...';
-            formMessage.textContent = '';
-
-            const formData = new FormData(form);
-
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'sans': ['Noto Sans KR', 'sans-serif'],
+              'orbitron': ['Orbitron', 'sans-serif'],
+            },
+            colors: {
+              'alpaka-bg': '#020a1a',
+              'alpaka-text': '#e0e0e0',
+              'alpaka-accent': '#00f0ff',
+              'alpaka-card-bg': 'rgba(10, 25, 47, 0.7)',
+              'alpaka-border': 'rgba(0, 240, 255, 0.3)',
+              'alpaka-subtext': '#b0c4de',
+              'alpaka-placeholder': '#8899aa',
+            },
+            boxShadow: {
+              'accent': '0 0 15px rgba(0, 240, 255, 0.5)',
+              'accent-lg': '0 0 25px rgba(0, 240, 255, 0.1)',
+              'accent-hover': '0 0 20px rgba(0, 240, 255, 0.3)',
+              'accent-button-hover': '0 0 25px rgba(0, 240, 255, 0.8)',
+            },
+            textShadow: {
+              'accent': '0 0 15px #00f0ff',
+            },
+          },
+        },
+        plugins: [
+            function({ addUtilities }) {
+                const newUtilities = {
+                    '.text-shadow-accent': {
+                        textShadow: '0 0 15px var(--tw-shadow-color, #00f0ff)',
+                    },
                 }
-                throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                if (data.result === 'success') {
-                    formMessage.textContent = '신청이 성공적으로 완료되었습니다. 곧 연락드리겠습니다.';
-                    formMessage.style.color = 'var(--accent-color)';
-                    form.reset();
-                } else {
-                    throw new Error(data.message || '알 수 없는 오류가 발생했습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                formMessage.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
-                formMessage.style.color = '#ff4d4d';
-            })
-            .finally(() => {
-                // Restore button state
-                submitButton.disabled = false;
-                submitButton.textContent = '무료 컨설팅 신청하기';
-            });
-        });
+                addUtilities(newUtilities)
+            }
+        ],
+      }
     </script>
-
+    <style>
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(1rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
